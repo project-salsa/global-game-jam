@@ -4,7 +4,7 @@ using System;
 public class UnitController : MonoBehaviour
 {
     public bool selected = false;
-    public int movementRange { get; set; } = 2;
+    public int movementRange = 2;
     public int maxHP { get; set; } = 10;
     public int curHP { get; set; } = 10;
     // either purify value for allies, damage for enemies
@@ -23,6 +23,10 @@ public class UnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (curHP <= 0)
+        {
+            Destroy(gameObject);
+        }
         if (Input.GetMouseButtonDown(0))
         {
             if (IsBeingClickedOn())
@@ -98,7 +102,6 @@ public class UnitController : MonoBehaviour
         switch (objectAtDestinaton.unitType)
         {
             case 0:
-
                 if (distance <= movementRange)
                 {
                     stateManager.PlaceGameObject(gameObject, currentUnitTilePos, destination);
@@ -114,7 +117,8 @@ public class UnitController : MonoBehaviour
                 if (distance == 1)
                 {
                     // get enemy at tile
-
+                    Attack(GameObject.Find(objectAtDestinaton.unitName));
+                    DeselectUnit();
                 }
                 break;
             case 3:
@@ -130,5 +134,15 @@ public class UnitController : MonoBehaviour
         var newPos = new Vector3Int(x, y, 0);
         var newPosCenter = grid.GetCellCenterLocal(newPos);
         transform.position = newPosCenter;
+    }
+
+    void Attack(GameObject target)
+    {
+        var unitController = target.GetComponent<UnitController>();
+        unitController.curHP -= baseSkillValue;
+        if (unitController.curHP < 0)
+        {
+            unitController.curHP = 0;
+        }
     }
 }

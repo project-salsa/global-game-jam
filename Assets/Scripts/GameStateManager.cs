@@ -70,8 +70,6 @@ public class GameStateManager : MonoBehaviour
     void Start()
     {
         frontier = new List<Position>();
-        Array.Clear(gridley, 0, gridley.Length);
-
         GenerateNewSeed();
     }
 
@@ -108,7 +106,6 @@ public class GameStateManager : MonoBehaviour
         {
             tag = (int)TileUnitType.Wall;
         }
-
 
         gridley[destination.x, destination.y] = new TileData(tag, obj.name);
     }
@@ -155,9 +152,6 @@ public class GameStateManager : MonoBehaviour
             gridley[19, i] = new TileData(3, "");
             gridley[i, 19] = new TileData(3, "");
         }
-
-        // I just ate a fucking jar of salsa in one sitting and my bowels have never felt more alive
-        // If this is what death is then I will embrace it's spicy delicious goodness
         for (int i = 0; i < 4; ++i)
         {
             for (int j = 0; j < 4; j++)
@@ -184,9 +178,6 @@ public class GameStateManager : MonoBehaviour
                 }
             }
         }
-
-
-        // I'm feeling house'd, daddy
     }
 
     int GridDistance(Vector3Int p1, Vector3Int p2)

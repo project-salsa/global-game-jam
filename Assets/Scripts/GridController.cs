@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum UnitType {
+enum UnitType
+{
     Ally,
     Enemy
 }
@@ -14,6 +15,9 @@ public class GridController : MonoBehaviour
     Grid grid;
     public GameObject enemy;
     public GameObject ally;
+
+    int allyIndex = 1;
+    int enemyIndex = 1;
 
     public GameObject[] enemies;
     public GameObject[] allies;
@@ -41,28 +45,16 @@ public class GridController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Debug.Log(Input.mousePosition);
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    var origin = new Vector2(ray.origin.x, ray.origin.y);
-
-        //    if (Physics.Raycast(ray) || Physics2D.Raycast(origin, new Vector2(0, 0)))
-        //    {
-        //        var newPos = grid.LocalToCell(ray.origin);
-        //        //Move(allies[0], newPos.x, newPos.y);
-        //    }
-        //}
     }
 
-    Vector3Int GetRandomVector ()
+    Vector3Int GetRandomVector()
     {
         float maxX = 10;
         float maxY = 10;
         return new Vector3Int((int)UnityEngine.Random.Range(1f, maxX + 1), (int)UnityEngine.Random.Range(1f, maxY + 1), 0);
     }
 
-    void Move (GameObject obj, int x, int y)
+    void Move(GameObject obj, int x, int y)
     {
         var newPos = new Vector3Int(x, y, 0);
         var newPosCenter = grid.GetCellCenterLocal(newPos);
@@ -70,22 +62,29 @@ public class GridController : MonoBehaviour
         obj.transform.position = newPosCenter;
     }
 
-    GameObject AddUnit (UnitType type, Vector3Int destination)
+    GameObject AddUnit(UnitType type, Vector3Int destination)
     {
         GameObject newObject;
         if (type == UnitType.Ally)
         {
             newObject = Instantiate(ally);
-        } else if (type == UnitType.Enemy)
+            newObject.name = "Ally" + allyIndex.ToString();
+            allyIndex++;
+        }
+        else if (type == UnitType.Enemy)
         {
             newObject = Instantiate(enemy);
-        } else
+            newObject.name = "Enemy" + enemyIndex.ToString();
+            enemyIndex++;
+        }
+        else
         {
             throw new Exception("tried to make an invalid unit");
         }
         Move(newObject, destination.x, destination.y);
+
         stateManager.PlaceGameObject(newObject, null, destination);
         return newObject;
-        
+
     }
 }
