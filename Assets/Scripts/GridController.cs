@@ -32,7 +32,8 @@ public class GridController : MonoBehaviour
             AddUnit(UnitType.Enemy, newPos);
         }
         Debug.Log("done adding enemies");
-        AddUnit(UnitType.Ally, new Vector3Int(1, 1, 0));
+        var allyPos = GetRandomVector();
+        AddUnit(UnitType.Ally, allyPos);
     }
 
     public void InitialSetup ()
@@ -40,7 +41,8 @@ public class GridController : MonoBehaviour
         var stateManagerObject = GameObject.Find("GameStateManager");
         stateManager = stateManagerObject.GetComponent<GameStateManager>();
         grid = GetComponentInParent<Grid>();
-        Debug_AddTestUnits();
+        int numEnemies = (int)UnityEngine.Random.Range(1f, 6f);
+        Debug_AddTestUnits(numEnemies);
     }
 
     // Start is called before the first frame update
