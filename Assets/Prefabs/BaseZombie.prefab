@@ -72,16 +72,17 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e29aa34bef8404c52b594bfc514982fd, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -3884008825882143819, guid: 55bc472100f5a8343b6ac2ea353d78e4,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!114 &3177903711753828983
 MonoBehaviour:
@@ -96,6 +97,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  movementRange: 2
+  zomb1: {fileID: -3884008825882143819, guid: 55bc472100f5a8343b6ac2ea353d78e4, type: 3}
+  zomb2: {fileID: 4432517419592654532, guid: 55bc472100f5a8343b6ac2ea353d78e4, type: 3}
+  zomb3: {fileID: -5249441859584170180, guid: 55bc472100f5a8343b6ac2ea353d78e4, type: 3}
 --- !u!65 &3674671464683996305
 BoxCollider:
   m_ObjectHideFlags: 0

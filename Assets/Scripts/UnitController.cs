@@ -9,6 +9,12 @@ public class UnitController : MonoBehaviour
     public int curHP { get; set; } = 10;
     // either purify value for allies, damage for enemies
     public int baseSkillValue { get; set; } = 2;
+
+    // sprites (probs a bit hacky but)
+    public Sprite zomb1;
+    public Sprite zomb2;
+    public Sprite zomb3;
+
     GameStateManager stateManager;
     Grid grid;
     // Use this for initialization
@@ -23,6 +29,8 @@ public class UnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateAppearance();
+
         if (curHP <= 0)
         {
             Destroy(gameObject);
@@ -75,11 +83,7 @@ public class UnitController : MonoBehaviour
 
     void DeselectUnit()
     {
-        var mainColor = Color.green;
-        if (gameObject.tag == "Enemy")
-        {
-            mainColor = Color.red;
-        }
+        var mainColor = Color.white;
         selected = false;
         var spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = mainColor;
@@ -143,6 +147,27 @@ public class UnitController : MonoBehaviour
         if (unitController.curHP < 0)
         {
             unitController.curHP = 0;
+        }
+    }
+
+    public void UpdateAppearance()
+    {
+        if (tag == "Enemy")
+        {
+            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+
+            if ((float)curHP/(float)maxHP <= .4)
+            {
+                renderer.sprite = zomb3;
+            }
+            else if ((float)curHP / (float)maxHP <= .4)
+            {
+                renderer.sprite = zomb2;
+            }
+            else
+            {
+                renderer.sprite = zomb1;
+            }
         }
     }
 }
