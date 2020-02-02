@@ -124,7 +124,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (seed != -1)
         {
-            rand = new System.Random();
+            rand = new System.Random((int)DateTime.UtcNow.Ticks);
         }
         else
         {
