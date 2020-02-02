@@ -607,7 +607,6 @@ GameObject:
   - component: {fileID: 752519091}
   - component: {fileID: 752519090}
   - component: {fileID: 752519089}
-  - component: {fileID: 752519092}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -725,32 +724,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752519087}
   m_CullTransparentMesh: 0
---- !u!114 &752519092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752519087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562ff5533783f2c4d88e892dc01ddf41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HandleClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 753803756}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
 --- !u!1 &753803756
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,6 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ceaffce6674d74fbf3788e573a17d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerTurn: 1
   gridObject: {fileID: 101368851}
 --- !u!4 &753803758
 Transform:
