@@ -111,7 +111,6 @@ public class UnitController : MonoBehaviour
                     stateManager.PlaceGameObject(gameObject, currentUnitTilePos, destination);
                     Move(destination.x, destination.y);
                     DeselectUnit();
-                    stateManager.isPlayerTurn = false;
                 }
                 break;
             case 1:
@@ -124,7 +123,6 @@ public class UnitController : MonoBehaviour
                     // get enemy at tile
                     Attack(GameObject.Find(objectAtDestinaton.unitName));
                     DeselectUnit();
-                    stateManager.isPlayerTurn = false;
                 }
                 break;
             case 3:
@@ -234,7 +232,7 @@ public class UnitController : MonoBehaviour
         }
         else if (objectAtDestinaton.unitType == 1)
         {
-            // TODO: ZOMBONI ATTACKONI
+            Attack(GameObject.Find(objectAtDestinaton.unitName));
         }
     }
 }
