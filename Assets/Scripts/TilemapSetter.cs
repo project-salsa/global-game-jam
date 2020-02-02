@@ -39,9 +39,9 @@ public class TilemapSetter : MonoBehaviour
             {
                 //TileBase tile();
 
-                Vector3Int vec= new Vector3Int(i,j,0);
+                Vector3Int vec = new Vector3Int(i, j, 0);
 
-                if (managerInterface.GetDataGrid()[i,j] == 3)
+                if (managerInterface.GetDataGrid()[i, j].unitType == 3)
                 {
                     tilemap.SetTile(vec, brick);
                 }

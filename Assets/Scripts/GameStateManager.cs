@@ -4,13 +4,25 @@ using System;
 using System.Numerics;
 using UnityEngine;
 
+
+public struct TileData
+{
+    public int unitType;
+    public string unitName;
+
+    public TileData(int type, string name)
+    {
+        unitType = type;
+        unitName = name;
+    }
+}
 public struct Position
 {
     public int xPos;
     public int yPos;
 
 
-    Position(int x, int y)
+    public Position(int x, int y)
     {
         xPos = x;
         yPos = y;
@@ -48,18 +60,15 @@ public class GameStateManager : MonoBehaviour
     public bool isPlayerTurn { get; set; } = true;
 
     public GameObject gridObject;
-    Grid grid;
 
     List<Position> frontier;
-    int[,] gridley = new int[20, 20];
+    TileData[,] gridley = new TileData[20, 20];
 
     System.Random rand;
 
     // Start is called before the first frame update
     void Start()
     {
-        var gridObject = GameObject.Find("Grid");
-        grid = gridObject.GetComponent<Grid>();
         frontier = new List<Position>();
         Array.Clear(gridley, 0, gridley.Length);
 
@@ -71,8 +80,6 @@ public class GameStateManager : MonoBehaviour
     {
         if (!isPlayerTurn)
         {
-            Debug.Log("Is it really you? My ASS");
-
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
             {
                 UnitController controlMeDaddy = obj.GetComponent<UnitController>();
@@ -85,7 +92,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (source.HasValue)
         {
-            gridley[source.Value.x, source.Value.y] = 0;
+            gridley[source.Value.x, source.Value.y] = new TileData(0, "");
         }
 
         int tag = 0;
@@ -103,17 +110,17 @@ public class GameStateManager : MonoBehaviour
         }
 
 
-        gridley[destination.x, destination.y] = tag;
+        gridley[destination.x, destination.y] = new TileData(tag, obj.name);
     }
 
-    public int[,] GetDataGrid()
+    public TileData[,] GetDataGrid()
     {
         return gridley;
     }
 
     public bool isPassable(int x, int y)
     {
-        return (gridley[x, y] > 0 ? false : true);
+        return (gridley[x, y].unitType > 0 ? false : true);
     }
 
     public void GenerateNewSeed(int seed = -1)
@@ -143,10 +150,10 @@ public class GameStateManager : MonoBehaviour
         // Outer edge of our house
         for (int i = 0; i < 20; ++i)
         {
-            gridley[0, i] = 3;
-            gridley[i, 0] = 3;
-            gridley[19, i] = 3;
-            gridley[i, 19] = 3;
+            gridley[0, i] = new TileData(3, "");
+            gridley[i, 0] = new TileData(3, "");
+            gridley[19, i] = new TileData(3, "");
+            gridley[i, 19] = new TileData(3, "");
         }
 
         // I just ate a fucking jar of salsa in one sitting and my bowels have never felt more alive
@@ -156,23 +163,23 @@ public class GameStateManager : MonoBehaviour
             for (int j = 0; j < 4; j++)
             {
                 // The four corners of our partition is always walls
-                gridley[i * 5, j * 5] = 3;
-                gridley[i * 5, j * 5 + 4] = 3;
-                gridley[i * 5 + 4, j * 5] = 3;
-                gridley[i * 5 + 4, j * 5 + 4] = 3;
+                gridley[i * 5, j * 5] = new TileData(3, "");
+                gridley[i * 5, j * 5 + 4] = new TileData(3, "");
+                gridley[i * 5 + 4, j * 5] = new TileData(3, "");
+                gridley[i * 5 + 4, j * 5 + 4] = new TileData(3, "");
 
 
                 if (partitions[i][j] == (int)HousePartitions.Room)
                 {
-                    if (i+1 < 4 && partitions[i+1][j] == (int) HousePartitions.Room)
+                    if (i + 1 < 4 && partitions[i + 1][j] == (int)HousePartitions.Room)
                     {
-                        gridley[i * 5 + 4, j*5 + 1] = (int)TileUnitType.Wall;
-                        gridley[i * 5 + 4, j*5 + 3] = (int)TileUnitType.Wall;
+                        gridley[i * 5 + 4, j * 5 + 1] = new TileData((int)TileUnitType.Wall, "");
+                        gridley[i * 5 + 4, j * 5 + 3] = new TileData((int)TileUnitType.Wall, "");
                     }
-                    else if (j+1 < 4 && partitions[i][j+1] == (int)HousePartitions.Room)
+                    else if (j + 1 < 4 && partitions[i][j + 1] == (int)HousePartitions.Room)
                     {
-                        gridley[i * 5 + 3, j*5 + 4] = (int)TileUnitType.Wall;
-                        gridley[i * 5 + 1, j*5 + 4] = (int)TileUnitType.Wall;
+                        gridley[i * 5 + 3, j * 5 + 4] = new TileData((int)TileUnitType.Wall, "");
+                        gridley[i * 5 + 1, j * 5 + 4] = new TileData((int)TileUnitType.Wall, "");
                     }
                 }
             }

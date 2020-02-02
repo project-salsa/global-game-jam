@@ -30,7 +30,8 @@ public class UnitController : MonoBehaviour
                 if (selected)
                 {
                     DeselectUnit();
-                } else
+                }
+                else
                 {
                     SelectUnit();
                 }
@@ -43,7 +44,7 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    bool IsBeingClickedOn ()
+    bool IsBeingClickedOn()
     {
         Vector3 currentUnitPos = transform.position;
         var currentUnitGridPos = grid.LocalToCell(currentUnitPos);
@@ -61,7 +62,7 @@ public class UnitController : MonoBehaviour
         return false;
     }
 
-    void SelectUnit ()
+    void SelectUnit()
     {
         selected = true;
         var spriteRenderer = GetComponent<SpriteRenderer>();
@@ -80,7 +81,7 @@ public class UnitController : MonoBehaviour
         spriteRenderer.color = mainColor;
     }
 
-    
+
 
     int GridDistance(Vector3Int p1, Vector3Int p2)
     {
@@ -91,13 +92,13 @@ public class UnitController : MonoBehaviour
     {
         var currentUnitTilePos = grid.LocalToCell(transform.position);
         // TODO: add a getObjectAtDestination func
-        int[,] dataGrid = stateManager.GetDataGrid();
+        TileData[,] dataGrid = stateManager.GetDataGrid();
         var objectAtDestinaton = dataGrid[destination.x, destination.y];
         int distance = GridDistance(destination, currentUnitTilePos);
-        switch (objectAtDestinaton)
+        switch (objectAtDestinaton.unitType)
         {
             case 0:
-                
+
                 if (distance <= movementRange)
                 {
                     stateManager.PlaceGameObject(gameObject, currentUnitTilePos, destination);
@@ -120,7 +121,7 @@ public class UnitController : MonoBehaviour
                 // wall - invalid move
                 return;
         }
-        
+
 
     }
 
