@@ -25,21 +25,28 @@ public class GridController : MonoBehaviour
 
     void Debug_AddTestUnits(int numEnemies = 1)
     {
+        Debug.Log("adding enemies");
         for (int i = 0; i < numEnemies; i++)
         {
             var newPos = GetRandomVector();
             AddUnit(UnitType.Enemy, newPos);
         }
+        Debug.Log("done adding enemies");
         AddUnit(UnitType.Ally, new Vector3Int(1, 1, 0));
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void InitialSetup ()
     {
         var stateManagerObject = GameObject.Find("GameStateManager");
         stateManager = stateManagerObject.GetComponent<GameStateManager>();
         grid = GetComponentInParent<Grid>();
         Debug_AddTestUnits();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
@@ -49,9 +56,9 @@ public class GridController : MonoBehaviour
 
     Vector3Int GetRandomVector()
     {
-        float maxX = 10;
-        float maxY = 10;
-        return new Vector3Int((int)UnityEngine.Random.Range(1f, maxX + 1), (int)UnityEngine.Random.Range(1f, maxY + 1), 0);
+        float maxX = 20;
+        float maxY = 20;
+        return new Vector3Int((int)UnityEngine.Random.Range(0f, maxX), (int)UnityEngine.Random.Range(0f, maxY), 0);
     }
 
     void Move(GameObject obj, int x, int y)
@@ -80,6 +87,20 @@ public class GridController : MonoBehaviour
         else
         {
             throw new Exception("tried to make an invalid unit");
+        }
+        var dataGrid = stateManager.GetDataGrid();
+        bool validPlacement = false;
+        while (!validPlacement)
+        {
+            if (dataGrid[destination.x, destination.y].unitType != 0)
+            {
+                destination = GetRandomVector();
+            } else
+            {
+                Debug.Log(destination);
+                Debug.Log(dataGrid[destination.x, destination.y].unitType);
+                validPlacement = true;
+            }
         }
         Move(newObject, destination.x, destination.y);
 

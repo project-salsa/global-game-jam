@@ -70,7 +70,12 @@ public class GameStateManager : MonoBehaviour
     void Start()
     {
         frontier = new List<Position>();
+        Debug.Log("map started");
         GenerateNewSeed();
+        Debug.Log("map done");
+        var gridObject = GameObject.Find("Grid");
+        var gridController = gridObject.GetComponent<GridController>();
+        gridController.InitialSetup();
     }
 
     // Update is called once per frame
