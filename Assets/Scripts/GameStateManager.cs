@@ -57,7 +57,7 @@ enum HousePartitions
 
 public class GameStateManager : MonoBehaviour
 {
-    public bool isPlayerTurn { get; set; } = true;
+    public bool isPlayerTurn = true;
 
     public GameObject gridObject;
 
@@ -78,6 +78,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (!isPlayerTurn)
         {
+            Debug.Log("ENEMY TURN");
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
             {
                 UnitController controlMeDaddy = obj.GetComponent<UnitController>();
@@ -174,5 +175,10 @@ public class GameStateManager : MonoBehaviour
     int GridDistance(Vector3Int p1, Vector3Int p2)
     {
         return Math.Abs(p1.x - p2.x) + Math.Abs(p1.y - p2.y);
+    }
+
+    public void EndPlayerTurn ()
+    {
+        isPlayerTurn = false;
     }
 }
