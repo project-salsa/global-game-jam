@@ -111,6 +111,7 @@ public class UnitController : MonoBehaviour
                     stateManager.PlaceGameObject(gameObject, currentUnitTilePos, destination);
                     Move(destination.x, destination.y);
                     DeselectUnit();
+                    stateManager.isPlayerTurn = false;
                 }
                 break;
             case 1:
@@ -123,6 +124,7 @@ public class UnitController : MonoBehaviour
                     // get enemy at tile
                     Attack(GameObject.Find(objectAtDestinaton.unitName));
                     DeselectUnit();
+                    stateManager.isPlayerTurn = false;
                 }
                 break;
             case 3:
@@ -160,7 +162,7 @@ public class UnitController : MonoBehaviour
             {
                 renderer.sprite = zomb3;
             }
-            else if ((float)curHP / (float)maxHP <= .4)
+            else if ((float)curHP / (float)maxHP <= .8)
             {
                 renderer.sprite = zomb2;
             }
@@ -168,6 +170,71 @@ public class UnitController : MonoBehaviour
             {
                 renderer.sprite = zomb1;
             }
+        }
+    }
+
+    public void MoveEnemy()
+    {
+        var myPos = grid.LocalToCell(this.gameObject.transform.position);
+
+        var allies = GameObject.FindGameObjectsWithTag("Ally");
+        Vector3Int closest_ally = new Vector3Int(99, 99, 0);
+
+        // Find the closest ally
+        foreach (var ally in allies)
+        {
+            var theirPos = grid.LocalToCell(ally.transform.position);
+
+            int tempX = theirPos.x - myPos.x;
+            int tempY = theirPos.y - myPos.y;
+
+            if (Math.Abs(tempX) +Math.Abs(tempY) < Math.Abs(closest_ally.x)+Math.Abs(closest_ally.y))
+            {
+                closest_ally = theirPos;
+            }
+        }
+
+
+        int x = closest_ally.x - myPos.x;
+        int y = closest_ally.y - myPos.y;
+
+        Vector3Int destination;
+
+        if (Math.Abs(x) > Math.Abs(y))
+        {
+            // We moving left/right
+            if (x < 0)
+            {
+                destination = new Vector3Int(myPos.x-1, myPos.y, 0);
+            }
+            else
+            {
+                destination = new Vector3Int(myPos.x + 1, myPos.y, 0);
+            }
+        }
+        else
+        {
+            // We moving up/down
+            if (y < 0)
+            {
+                destination = new Vector3Int(myPos.x, myPos.y-1, 0);
+            }
+            else
+            {
+                destination = new Vector3Int(myPos.x, myPos.y+1, 0);
+            }
+        }
+
+        TileData[,] dataGrid = stateManager.GetDataGrid();
+        var objectAtDestinaton = dataGrid[destination.x, destination.y];
+        if (objectAtDestinaton.unitType == 0)
+        {
+            stateManager.PlaceGameObject(this.gameObject, myPos, destination);
+            Move(destination.x, destination.y);
+        }
+        else if (objectAtDestinaton.unitType == 1)
+        {
+            // TODO: ZOMBONI ATTACKONI
         }
     }
 }

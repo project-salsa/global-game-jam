@@ -82,6 +82,7 @@ public class GameStateManager : MonoBehaviour
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
             {
                 UnitController controlMeDaddy = obj.GetComponent<UnitController>();
+                controlMeDaddy.MoveEnemy();
             }
 
             isPlayerTurn = true;
