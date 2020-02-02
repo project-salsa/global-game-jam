@@ -120,17 +120,8 @@ public class GameStateManager : MonoBehaviour
         return (gridley[x, y].unitType > 0 ? false : true);
     }
 
-    public void GenerateNewSeed(int seed = -1)
+    public void GenerateNewSeed()
     {
-        if (seed != -1)
-        {
-            rand = new System.Random((int)DateTime.UtcNow.Ticks);
-        }
-        else
-        {
-            rand = new System.Random(seed);
-        }
-
         // We now have all of our houses, let's set the array
 
         List<List<int>> partitions = new List<List<int>>();
@@ -140,7 +131,7 @@ public class GameStateManager : MonoBehaviour
             partitions.Add(new List<int>());
             for (int i = 0; i < 4; i++)
             {
-                partitions[j].Add(rand.Next(0, 2));
+                partitions[j].Add(UnityEngine.Random.Range(0,2));
             }
         }
 
