@@ -87,4 +87,12 @@ public class GridController : MonoBehaviour
         return newObject;
 
     }
+
+    public void RemoveUnit(GameObject unit)
+    {
+        var unitGridPos = grid.LocalToCell(unit.transform.position);
+        var dataGrid = stateManager.GetDataGrid();
+        dataGrid[unitGridPos.x, unitGridPos.y] = new TileData(0, "");
+        GameObject.Destroy(unit);
+    }
 }

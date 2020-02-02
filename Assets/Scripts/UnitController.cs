@@ -17,6 +17,7 @@ public class UnitController : MonoBehaviour
 
     GameStateManager stateManager;
     Grid grid;
+    GridController gridController;
     // Use this for initialization
     void Start()
     {
@@ -24,6 +25,7 @@ public class UnitController : MonoBehaviour
         var gameStateObject = GameObject.Find("GameStateManager");
         stateManager = gameStateObject.GetComponent<GameStateManager>();
         grid = gridObject.GetComponent<Grid>();
+        gridController = gridObject.GetComponent<GridController>();
     }
 
     // Update is called once per frame
@@ -33,7 +35,7 @@ public class UnitController : MonoBehaviour
 
         if (curHP <= 0)
         {
-            Destroy(gameObject);
+            gridController.RemoveUnit(gameObject);
         }
         if (Input.GetMouseButtonDown(0))
         {
